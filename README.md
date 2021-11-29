@@ -15,6 +15,7 @@ The heatmap chart helps you to find words starting with and/or ending in a speci
 Clicking on a letter on y-axis will select the words starting with that letter. (The result will be reflected on the heatmap and the sankey diagram.)
 Clicking on a letter on x-axis will select the words enidng in that letter. (The result will be reflected on the heatmap and the sankey diagram.)
 Clicking on a rectangle on the heatmap will select the words with the specified first and last letters. (The result will be reflected on the heatmap and the sankey diagram.)
-You can set the lower and upper limit for words' length using the sliders. (The result will be reflected on the heatmap and the sankey diagram.)
+
+Since there are 7 tiles at each round of the Scrabble game, as a reasonable start, the default minimum and maximum word length are set to 3 and 10, recpectively. It is still possible to change the lower and upper limits for words' length using the sliders. (The result will be reflected on the heatmap and the sankey diagram.)
 
 The number appearing by each word in superscript is its score in the Scrabble game.
