@@ -1,6 +1,6 @@
 # Scrabble Sankey
 
-Scrabble Sankey diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hierarchy, intending the path tracing as the main desired task.
+<a href="http://darya-y.com/ScrabbleSankey/" target="_blank">Scrabble Sankey</a> diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hierarchy, intending the path tracing as the main desired task.
 
 <h2>How to use the visualisation:</h2>	
 <p>In the <em>sankey</em> diagram words are considered as strings of letters (spread horizontally starting from letter index 1 to the word's length). Each node represents a letter at a specific letter index. Each link connects two adjacent letters of a word.</p>
