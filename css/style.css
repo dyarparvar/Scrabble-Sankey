@@ -385,18 +385,34 @@ a {
   font-weight: 300;
   font-size: 12pt; /*calc(0.15em + 2.5vmin);*/
   line-height: 1.2;
-  color: var(--textblack);
+  color: var(--textBlack);
 }
 
 /************************************************************************************************** Colour Palette */
 
 :root {
-  --whiteBg: #FBFBFB;
-  --textblack: #000020;
-  --buttonBg: #dfff80;
-  --buttonText: #0269ca;
-  --shadow: rgb(131, 131, 131); 
+  --whiteBg: #F6F6F6;
+  --redBg: #b3412a;
+  --textBlack: #000020;
+  --purpleBg: #afa1f4;
+  --greyBg: #BDBDBD;
+
+  --defaultBlue:  rgb(12,90,250);
+
+  --textPurple: #4b4582;
+
+  --sankeyGreen: #dfff80;
+  --sowpodsRed: #e99990;
+  --buttonBlue: rgb(12,90,250);
+  --loadGrey: #BDBDBD;
+
+
+  
+  --shadow: rgb(131, 131, 131);
   --border: #DCD8E3;
+
+
+ 
 
 }
 
@@ -496,7 +512,7 @@ a {
 } 
 
 
-#context, #userGuide, #graphics, #userData, #resetSankey, #footnotes {
+#context, #userGuide, #graphics, #userData, #resetSankey, #footnotes, #meanings {
   -ms-grid-column-align: stretch;
       justify-self: stretch;
   -ms-grid-row-align: stretch;
@@ -545,7 +561,13 @@ a {
   grid-area: 6 / 1 / 7 / 31 ;
 }
 
-
+#meanings {
+  -ms-grid-row: 7;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 30;
+  grid-area: 7 / 1 / 8 / 31 ;
+}
 
 
 
@@ -583,6 +605,7 @@ h3#intro {
   font-style: italic;
 }
 
+
 h2 {
   padding: 0.5rem;
   font-size: 0.8rem;
@@ -608,7 +631,7 @@ label {
 
 .button {
   display: inline-block;
-  background-color: var(--buttonBg);
+  background-color: var(--sankeyGreen);
   border-radius: 3px;
   box-shadow:  0px 0px 3px var(--shadow);
   cursor: pointer;
@@ -616,7 +639,7 @@ label {
   font-size: 0.8rem;
   font-weight: 500;
   text-align: center;
-  color: var(--buttonText);
+  color: var(--defaultBlue);
 }
 
 
@@ -631,40 +654,80 @@ label {
   border-radius: 3px;
 }
 
-
+#userGuide p a {
+  background-color: var(--sowpodsRed);
+  color: var(--textBlack);
+  padding: 0 0.5rem;
+}
   
-
-
-
-
-
-
 
 #userData {
   padding: 0.5rem;
 }  
 
 
+
+#userData .button {
+  color:  var(--textBlack);
+  margin: 0.5rem;
+}
+#userData #loadData.button {
+  background-color: var(--loadGrey);
+}
+
+#userData #sowpodsData.button {
+  background-color: var(--sowpodsRed);
+}
+
+
 #userData textarea {
+  background-color: var(--loadGrey);
+  border: none;
+  border-radius: 3px;
   width: 100%;
+  height: 48px;
+  resize: none;
   padding: 0.5rem;
-  background-color: PaleGoldenRod;
   font-size: smaller;
   font-weight: lighter;
-  margin: 0 0.5rem;
+  
 } 
 
-#userData a.button {
-  margin: 0 0.5rem;
-}
 
 #footnotes {
   padding: 0.5rem;
-  background-color: var(--whiteBg); /*WhiteSmoke;*/ /*PaleGoldenRod;*/
+  background-color: var(--whiteBg);
 }
 
 
+#meanings div {
+  background-color: var(--greyBg);
+  text-align: center;
+  border: 1px solid var(--border);
+  width: 100%;
+  border-radius: 6px;
+  overflow-y: scroll; 
+  overflow-x: hidden; 
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: space-evenly;
+  align-items: baseline;
+  gap: 0.5rem;
+}
 
+#meanings div text {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background-color: var(--whiteBg);
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
 
 
 
@@ -770,7 +833,7 @@ label {
         font-weight: 500;
         margin-right: 1rem !important;
         padding: 0.5rem;
-        color: rgb(12,90,250);
+        color: var(--defaultBlue);
       }
 
       
@@ -782,7 +845,7 @@ label {
       #information span tspan {
         font-size: 0.8rem;
         font-weight: 500;
-        color: rgb(12,90,250);
+        color: var(--defaultBlue);
       }
 
       #information {
@@ -834,7 +897,7 @@ label {
     -ms-grid-column: 18;
     -ms-grid-column-span: 13;
     grid-area: 2 / 18 / 3 / 31;
-    background-color: Tomato;
+    background-color: var(--redBg);
     text-align: center;
     border: 1px solid var(--border);
     width: 100%;
@@ -851,13 +914,13 @@ label {
     flex-direction: row;
     flex-wrap: wrap;
     align-content: flex-start;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: baseline;
     gap: 0.5rem;
 
 }
       #graphics .heatMapWords text {
-        width: 25%;
+        min-width: 32%;
         padding: 0.5rem;
         border: 1px solid var(--border);
         border-radius: 3px;
@@ -865,6 +928,7 @@ label {
         font-size: 0.8rem;
         font-weight: 400;
         letter-spacing: 1px;
+        cursor: pointer;
       }
 
      
@@ -881,13 +945,14 @@ label {
         top: 0%;
         right: 0%;
         display: block;
-        background-color: Tomato;
+        background-color: var(--redBg);
         padding: 0.5rem 0;
       }
       #graphics .heatMapWords .close a {
         display: inline-block;
         cursor: pointer;
         box-shadow:  0px 0px 3px black ;
+        background-color: var(--greyBg);
         border-radius: 3px;
         padding: 0.75rem;
         font-size: 0.8rem;
@@ -913,7 +978,7 @@ label {
         font-size: 0.8rem;
         font-weight: 400;
         letter-spacing: 1px;
-        color: Tomato;
+        color: var(--greyBg);
       }
 
       #graphics .heatMapWords .info tspan {
@@ -1008,7 +1073,7 @@ label {
   -ms-grid-row-align: end;
       align-self: end;
   margin: 0 auto;
-  background-color: Plum ;
+  background-color: var(--purpleBg) ;
   border-radius: 6px;
   position: relative;
   overflow-x: scroll;
@@ -1028,7 +1093,8 @@ label {
         font-size: 0.8rem;
         font-weight: 500;
         letter-spacing: 1px;
-        color: RebeccaPurple;
+        color: var(--textPurple);
+        cursor: pointer;
       }
 
       #graphics .sankeyWords text tspan {
@@ -1049,13 +1115,13 @@ label {
       #graphics .sankeyWords .close a {
         display: inline-block;
         cursor: pointer;
-        background-color: Plum ;
+        background-color: var(--greyBg) ;
         box-shadow:  0px 0px 3px black ;
         border-radius: 3px;
         padding: 0.5rem;
         font-size: 0.8rem;
         text-align: center;
-        color: black;
+        color: var(--textBlack);
         font-weight: 300;
       }
 
@@ -1106,7 +1172,7 @@ label {
         display: inline-block;
         width: 15px;
         height: 15px;
-        background-color: #f2eded;
+        background-color: var(--defaultBlue);
         box-shadow:  0px 0px 4px var(--shadow);
         border-radius: 100%;
         cursor: pointer;
@@ -1121,7 +1187,7 @@ label {
         display: inline-block;
         width: 15px;
         height: 15px;
-        background-color: rgb(12,90,250);
+        background-color: var(--defaultBlue);
         box-shadow:  0px 0px 4px var(--shadow);
         border-radius: 100%;
         cursor: pointer;
