@@ -7,7 +7,7 @@
 		<meta name="author" content="© 2021 Darya Yarparvar. All rights reserved.">
 		<link rel="preconnect" href="https://use.typekit.net/mok3rgv.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-		<link rel="stylesheet" type="text/css" media="screen and (min-width: 600px)and (min-height: 700px)" href="css/style.css">
+		<link rel="stylesheet" type="text/css" media="screen and (min-width: 600px)and (min-height: 660px)" href="css/style.css">
 		<link rel="stylesheet" href="https://use.typekit.net/mok3rgv.css">
 
 
@@ -31,7 +31,7 @@
 					<h1 id="title">Scrabble Sankey</h1>
 					<h3 id="intro">I could not resist choosing a playful subject to practice Sankey diagram... and I love word games! So here it is: <em>the scrabble sankey</em>! Play with it and have fun!</h3>
 					<p>Words are strings of letters (spread horizontally). Each node represents a letter at a specific position. Each link connects two adjacent letters of a word.</p>
-					<p>This Sankey diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hirearchy, intending the path tracing as the main desired task.</p>
+					<p>This Sankey diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hierarchy, intending the path tracing as the main desired task.</p>
 					
 				</div>
 					
@@ -50,7 +50,7 @@
 					<p>In the <em>sankey</em> diagram words are considered as strings of letters (spread horizontally starting from letter index 1 to the word's length). Each node represents a letter at a specific letter index. Each link connects two adjacent letters of a word.</p>
 					<p>Click on a node to narrow down the current word list to those words that have the selected letter at that specific letter index.</p>
 					<p>Click on a link to narrow down the current word list to those words that have the selected consecutive letters at those specific letter indices.</p>
-					<p>If you click on the Reset button, the word list filteration caused by clicking node/link will be reset to none.</p>
+					<p>If you click on the Reset button, the word list filtration caused by clicking node/link will be reset to none.</p>
 					<p>You can download the list of the words appearing in the Sankey diagram at whatever step you like.</p><br>
 
 					<p>You can also add your own text into the text box (ideas: baby names, place names, ...)</p><br>
@@ -99,15 +99,29 @@
 				<div id="userData">
 					<h2>You can paste your own text or word list and update the graphics using that data...</h2>
 					<textarea  id="data" name="message" placeholder="Please paste your text here and press Load Data"></textarea>
-					<a id="loadData" class="button">Load Data</a>
-					<a id="sowpodsData" class="button">Load SOWPODS</a>
+					<a id="loadData" class="button">Load my data</a>
+					<a id="sowpodsData" class="button">Re-load SOWPODS data</a>
 				</div>
 
 
 				<div id="footnotes">
 					<h2>footnotes & methods</h2>
 					<p>Since there are 7 tiles at each round, as a reasonable start, the default minimum and maximum word length are set to 3 and 10, recpectively. It is still possible to dig deeper and play with the word length limits using the sliders.</p>	
+					<p>Data Source: <a href="https://www.wordgamedictionary.com/sowpods/download/sowpods.txt">sowpods.txt</a></p>
+					<p>Free Dictionary API: <a href="https://dictionaryapi.dev/">dictionaryapi.dev</a></p>
 				</div>
+
+				<div id="meanings">
+					<!-- <div id="exclamation"></div>
+					<div id="noun"></div>
+					<div id="intransitive verb"></div>
+					<div id="verb"></div>
+					<div id="adjective"></div>
+					<div id="adverb"></div> -->
+				</div>
+
+				
+
 
 
 				
@@ -205,7 +219,7 @@
 			const bgColour = whites[1]; 
 			const tooltipBoxSize = 40;
 			const linkOpacity = 0.5;
-			const heatmapColour = [chroma(whites[0]), reds[1]];
+			const heatmapColour = [chroma(greys[2]), reds[1]];
 
 
 			const fonts = {
@@ -222,7 +236,7 @@
 							index : {
 									size: 12,
 									weight : 400,
-									colour : chroma(blues[1]).saturate().darken(2) //chroma(blacks[0]).brighten(3).desaturate(2)
+									colour : chroma(blues[1]).saturate().darken(2) //chroma(blues[0]) //chroma(blues[1]).saturate().darken(2) //chroma(blacks[0]).brighten(3).desaturate(2)
 								},
 							axis : { 
 									size: 8,
@@ -251,7 +265,7 @@
 
 			colours = {
 				node : chroma(blues[1]),
-				nodeH : chroma(blues[1]).saturate().darken(2),
+				nodeH : chroma(blues[1]).saturate().darken(2), //chroma(blues[0]), //chroma(blues[1]).saturate().darken(2),
 				link : chroma(greens[3]),
 				linkH : chroma(blues[0]),
 				tooltipbg : chroma(blues[1]),
@@ -259,7 +273,7 @@
 				dbLetterH : chroma(greens[0]).saturate().darken(),
 				dbLetterMax : chroma(greens[2]),
 				dbLetterMaxG : chroma(greens[2]),
-				histo : chroma(blues[1]),
+				histo : chroma(blacks[0]).brighten(3.5).desaturate(2), //chroma(blues[1]),
 				histoH : chroma(blues[0]),
 				histoMax : chroma(reds[2]),
 				heatmapH : chroma(blues[0]),
@@ -479,7 +493,11 @@
 								.selectAll("text")
 								.data(scoredWords)
 								.join("text")
-								.html(d => `<a href="${cambridgeDictionary + encodeURIComponent(d.word)}">${d.word} <tspan>${d.score}</tspan> </a>`);
+								.html(d => `<a>${d.word} <tspan>${d.score}</tspan> </a>`)
+								.on("click", function(event, d) {
+									console.log(d.word);
+									findMeaning(d.word);
+								});
 
 
 					};
@@ -553,7 +571,12 @@
 							.selectAll("text")
 							.data(scoredWords)
 							.join("text")
-							.html(d => `<a href="${cambridgeDictionary + encodeURIComponent(d.word)}" class="dictionary">${d.word} <tspan>${d.score}</tspan></a>`);
+							.html(d => `<a>${d.word} <tspan>${d.score}</tspan> </a>`)
+							.on("click", function(event, d) {
+								console.log(d.word);
+								findMeaning(d.word);
+							});
+							// .html(d => `<a href="${cambridgeDictionary + encodeURIComponent(d.word)}" class="dictionary">${d.word} <tspan>${d.score}</tspan></a>`);
 				
 
 					if (!d3.select(".heatMapWords").select(".close").select(".info").node()) {
@@ -586,11 +609,35 @@
 			        		return resp.json()
 			            })
 			            .then(data => {
-			            	pronunciation = new Audio(data[0].phonetics[0].audio);
-			            	pronunciation.play();
+			            	console.log(data);
+			            	meanings = data[0].meanings;
+			            	definitions = d3.map(meanings, obj => { 
+			            											key = obj.partOfSpeech;
+			            											
+			            											if (!d3.select(`#${key}`).node()) {
+			            												d3.select("#meanings")
+								            								.append("div")
+								            								.attr("id", key)
+								            								.attr("class", "temporary")
+								            								.append("h6")
+								            								.html(`${key}`);
+							            							};
+			            											
+
+
+			            											d3.select(`#${key}`)
+							            								.selectAll("text")
+							            								.data(obj.definitions)
+							            								.join("text")
+							            								.text(d => d.definition)
+							            							});
+
+			            	// pronunciation = new Audio(data[0].phonetics[0].audio);
+			            	// pronunciation.play();
 			            })
 			            .catch(err => {
 			              console.error(err);
+			              alert("Sorry pal, we couldn't find definitions for the word you were looking for.");
 			            }
 			        );
 		        };
@@ -2040,7 +2087,7 @@
 															heatmapChart.select(".heatmapRects")
 																		.selectAll("rect")
 																		.filter(key => key[0][1] == d )
-																		.attr("fill", key => chroma(colourScale(key[1].length)).darken(1.2));
+																		.attr("fill", key => chroma(colourScale(key[1].length)).darken(0.8));
 								})
 								.on("mouseout", function(event, d) {
 															d3.select(this)
@@ -2115,7 +2162,7 @@
 															heatmapChart.select(".heatmapRects")
 																		.selectAll("rect")
 																		.filter(key => key[0][0] == d )
-																		.attr("fill", key => chroma(colourScale(key[1].length)).darken(0.2));
+																		.attr("fill", key => chroma(colourScale(key[1].length)).darken(0.8));
 								})
 								.on("mouseout", function(event, d) {
 															d3.select(this)
@@ -2386,7 +2433,35 @@
 					
 
 				//////////////////////////////////////////////////////////// Buttons
-				///// RESET everything! data, graphs, selections, filteration, ... 
+				
+
+				d3.selectAll(".button")
+					.on("mouseover", function() {
+						button = d3.select(this);
+						darkerColour = chroma(getComputedStyle(button.node()).backgroundColor).darken(0.5);
+						button.node().style.backgroundColor = darkerColour;
+					})
+					.on("mouseout", function() {
+						button = d3.select(this);
+						lighterColour = chroma(getComputedStyle(button.node()).backgroundColor).brighten(0.5);
+						button.node().style.backgroundColor = lighterColour;
+					});
+
+				d3.selectAll(".close")
+					.select("a")
+					.on("mouseover", function() {
+						button = d3.select(this);
+						darkerColour = chroma(getComputedStyle(button.node()).backgroundColor).darken(0.5);
+						button.node().style.backgroundColor = darkerColour;
+					})
+					.on("mouseout", function() {
+						button = d3.select(this);
+						lighterColour = chroma(getComputedStyle(button.node()).backgroundColor).brighten(0.5);
+						button.node().style.backgroundColor = lighterColour;
+					}); 
+				 
+				 
+				///// RESET everything! data, graphs, selections, filtration, ... 
 				d3.select("#resetSankey")
 					.select(".button")
 					.on("click", function() {
@@ -2433,6 +2508,7 @@
 								        	 * 
 											 * @description sliderUpdate includes Sankey & Heatmap updates
 											 */
+											
 											sliderUpdate(min, max, userWords);
 											
 
