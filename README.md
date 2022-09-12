@@ -1,6 +1,6 @@
 # Scrabble Sankey
 
-<a href="http://darya-y.com/ScrabbleSankey/" target="_blank">Scrabble Sankey</a> diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hierarchy, intending the path tracing as the main desired task.
+<a href="http://www.darya-y.com/Scarbble-Sankey-DataViz/">Scrabble Sankey</a> diagram is a multilevel network idiom that combines a node-link diagram with a derived cluster hierarchy, intending the path tracing as the main desired task.
 
 
 <h2>How to use the visualisation:</h2>	
